@@ -42,6 +42,17 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- MyBatis-Plus：注意 Boot 3 必须用 spring-boot3 结尾的 starter -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <version>3.5.7</version>
+        </dependency>
+        <!-- MySQL 驱动，版本走 Boot 官方 BOM，不用写 -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
