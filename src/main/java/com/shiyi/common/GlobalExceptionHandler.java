@@ -28,4 +28,17 @@ public class GlobalExceptionHandler {
         log.error("系统异常", e);
         return Result.fail(500, "系统繁忙，请稍后重试");
     }
+
+    /** 未登录：401 语义 */
+    @ExceptionHandler(cn.dev33.satoken.exception.NotLoginException.class)
+    public Result<Void> handleNotLogin(cn.dev33.satoken.exception.NotLoginException e) {
+        log.debug("未登录访问: {}", e.getMessage());
+        return Result.fail(401, "未登录或登录已过期");
+    }
+
+    /** 无权限：403 语义 */
+    @ExceptionHandler(cn.dev33.satoken.exception.NotRoleException.class)
+    public Result<Void> handleNotRole(cn.dev33.satoken.exception.NotRoleException e) {
+        return Result.fail(403, "无权访问");
+    }
 }

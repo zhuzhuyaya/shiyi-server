@@ -15,4 +15,10 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
+sa-token:
+  token-name: Authorization
+  token-prefix: Bearer
+  active-timeout: 2592000
+  is-read-cookie: false
+  is-concurrent: true
 
