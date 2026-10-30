@@ -1,4 +1,4 @@
-package com.shiyi.module.user;
+package com.shiyi.module.user.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.hutool.core.bean.BeanUtil;
