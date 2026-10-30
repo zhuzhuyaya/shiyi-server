@@ -34,6 +34,7 @@ public class AuthServiceImpl implements AuthService {
         User user = new User();
         user.setPhone(dto.getPhone());
         user.setNickname(dto.getNickname());
+        user.setAvatar("");
         user.setRole("USER");
 
         user.setPasswordHash(BCrypt.hashpw(dto.getPassword()));
