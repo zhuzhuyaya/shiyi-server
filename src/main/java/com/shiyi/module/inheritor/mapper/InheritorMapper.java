@@ -1,4 +1,7 @@
 package com.shiyi.module.inheritor.mapper;
 
-public class InheritorMapper {
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.shiyi.module.inheritor.entity.Inheritor;
+
+public interface InheritorMapper extends BaseMapper<Inheritor> {
 }
