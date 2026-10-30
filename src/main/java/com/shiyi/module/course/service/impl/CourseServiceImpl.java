@@ -13,7 +13,11 @@ import com.shiyi.module.course.mapper.CourseSessionMapper;
 import com.shiyi.module.course.service.CourseService;
 import com.shiyi.module.inheritor.entity.Inheritor;
 import com.shiyi.module.inheritor.service.InheritorService;
+import com.shiyi.module.search.mq.CourseSyncEvent;
+import com.shiyi.module.search.mq.RabbitMQConfig;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +31,25 @@ public class CourseServiceImpl implements CourseService {
     private final CourseSessionMapper courseSessionMapper;
     private final InheritorService inheritorService;
     private final MinioService minioService;
+    private final StringRedisTemplate stringRedisTemplate;
+    private final RabbitTemplate rabbitTemplate;
+
+    /** 课程变更后的一致性动作:删详情缓存(Cache-Aside)+ 发 ES 同步事件,收口一处防漏 */
+    private void notifyCourseChanged(Long courseId) {
+        stringRedisTemplate.delete("cache:course:detail:" + courseId);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_COURSE, "", new CourseSyncEvent(courseId));
+    }
+
+    @Override
+    public void verify(Long courseId, boolean pass) {
+        Course course = courseMapper.selectById(courseId);
+        if (course == null) {
+            throw new BusinessException("课程不存在");
+        }
+        course.setStatus(pass ? Course.STATUS_ONLINE : Course.STATUS_OFFLINE);
+        courseMapper.updateById(course);
+        notifyCourseChanged(courseId);        // ← 加这行(顺手补上了第 5 课欠的"审核删缓存")
+    }
 
     @Override
     public void publish(CourseCreateDTO dto) {
@@ -85,21 +108,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void verify(Long courseId, boolean pass) {
-        Course course = courseMapper.selectById(courseId);
-        if (course == null) {
-            throw new BusinessException("课程不存在");
-        }
-        course.setStatus(pass ? Course.STATUS_ONLINE : Course.STATUS_OFFLINE);
-        courseMapper.updateById(course);
-    }
-
-    @Override
     public String updateCover(Long courseId, MultipartFile file) {
         Course course = getMyCourse(courseId);          // 属主校验直接复用，新功能零成本获得防护
         String url = minioService.upload(file);
         course.setCover(url);
         courseMapper.updateById(course);
+        notifyCourseChanged(courseId);
         return url;
     }
 
