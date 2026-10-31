@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 @TableName("user")
 public class User {
 
+    public static final int STATUS_ENABLED = 1;
+    public static final int STATUS_DISABLED = 0;
+
     @TableId(type = IdType.AUTO)
     private Long id;
 
@@ -20,6 +23,7 @@ public class User {
     private String avatar;
     private String role;
     private Integer status;
+    private LocalDateTime lastLoginAt;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }
