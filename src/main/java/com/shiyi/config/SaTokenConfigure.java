@@ -14,6 +14,9 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
                 .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/v1/courses/**")
-                .excludePathPatterns("/api/v1/auth/login", "/api/v1/auth/register");
+                .excludePathPatterns("/api/v1/heritage-items/**")
+                .excludePathPatterns("/api/v1/auth/login", "/api/v1/auth/register")
+                .excludePathPatterns("/api/v1/rag/ask")   // 仅问答匿名可用;索引重建已收敛到 /admin/rag/reindex(ADMIN)
+                .excludePathPatterns("/api/v1/pay/notify");   // 支付宝服务器回调,无登录态(第 12 课)
     }
 }

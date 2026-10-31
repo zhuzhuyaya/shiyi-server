@@ -10,6 +10,12 @@ import java.time.LocalDateTime;
 @Data
 @TableName("heritage_item")
 public class HeritageItem {
+
+    /** 用户随入驻申请提交的新项目,管理员收录后前台可见 */
+    public static final int STATUS_PENDING = 0;
+    public static final int STATUS_ACTIVE = 1;
+    public static final int STATUS_DISABLED = 2;
+
     @TableId(type = IdType.AUTO)
     private Long id;
 
@@ -19,5 +25,6 @@ public class HeritageItem {
     private String region;      // 申报地区
     private String cover;
     private String description;
+    private Integer status;     // 0 待收录 1 已收录 2 已停用
     private LocalDateTime createTime;
 }
