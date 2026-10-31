@@ -11,13 +11,13 @@ spring:
     redis:
       host: localhost
       port: 6379
-      password: 123456
+      password: 
 
   rabbitmq:
     host: localhost
     port: 5672
     username: admin
-    password: 123456
+    password: 
 
   application:
     name: shiyi-server
@@ -25,7 +25,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shiyi?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     username: root
-    password: 123456
+    password: 
 
 mybatis-plus:
   configuration:
@@ -42,7 +42,7 @@ sa-token:
 minio:
   endpoint: http://localhost:9000
   access-key: minioadmin
-  secret-key: minioadmin123
+  secret-key: 
   bucket: shiyi
 
 
@@ -59,9 +59,9 @@ langchain4j:
 
 # 支付宝沙盒(第 12 课):APPID/私钥/支付宝公钥填你控制台里的真实值,私钥别提交公开仓库
 alipay:
-  app-id: 9021000158683012
+  app-id: 
   gateway: https://openapi-sandbox.dl.alipaydev.com/gateway.do   # 以沙箱控制台显示为准
-  merchant-private-key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC2fKdRLFp8yLYJZmHHzopF6Nu9ms0aW3xdBh4im2479yxVUYP1yZetIfRIf1oj7bXoLSxROfO8wDQdJ8HoQoMH+54tZor8HxrUPrQi1p3r4jhP1K3M19Y4B/IxeVPN+bWQQ1Gt6w/lN5nWG3u2O0qxYtw0uKxUuOZYKK7ynmcWkF3Bn7/UxandBX4ilxGRh1IYcWSVl9gfzhZPjJ76gSuG/lRTpBWTE7I1zH/0a+ePi07VS0zo+PDvUg2y2UlnqCfKO2DL/aaag7PpDBIPYbIswAnnPfTeLv0JCfa5V6Y6UYtLkGyoy7rK1rCOmUCl1T9PigVgIfbDWmDjUAYbNgy1AgMBAAECggEBAKI2jESLuKPThn00lRaXcjJSm4IfaNJVIGdQWNlKcOK9BJuSqkqBuGIeHJeVHPtzApAwF4TcjtzpvWltPeDHvtIJyMFytXkH7UFdu6J8RES6AnR0CUpdUf7ckV2JDAW8QrjKHoEKwkZu9kBsjbufWPX1eukif42QDrGu+FSSmfBjQi2+Ot+ExOeSIPdDkK4yDi3Q3d0Ln/E5km+Dhu7TcHisKDfHAC6O64wIRa7nQFkFlAhtv2IDoIfB5Lh5d/gbTQoU/VvtIj5pSYjgcjUg65BGWBS7v3iyADGPdnWAm+SC3EsFUm7RgyHAIMAdxEDUpZd/O69qe/+2uoh0+rHJUgECgYEA7DJRBPB2Hq7U7QD0C2frZt2vRTW94AOd6+D5CfV6IOAqb8Fbzl0V8Hxu2FIHIo9Tpa1oQlF9PGp1EuHJ6BqTZXLbpbSWZeY5LvH9xQepZQ7S1SdJQrNcfh6s8bN/EzkXBIrft6y9FUZYeOatYvZtz+f8xDHaPqfYFle5Mmc5prkCgYEAxcmF0MSsMXsCDeQYaE7cjM2kDHhZGoF2q8NYNjse80FienSvY3OESU38Mnc8jihWrjoW5WYKtIoONmTuQw+Lj5+24goRjW60FzN6mbbZahRbIn2i6BNnBcFNuh7YbW/DEMf+1T0lsyS3TGV8DaSbgcW/FzYgt5IKS/R+jljql90CgYBSmqZLG+2zfWFqIdM3yfhB2XXatpjZJ2qre9qc6QT1SnCM9QqueU+a82mwrb9hDs8qOiMkTmuGHZUkLWL3kZPK/whiQ2315TZKfMdLiQptFWoWsc6lTSUj1oaVYTkn9+dc51SmX/sg3aFDZylsWtK8y11TIDw7fWfNKJDUV9WJwQKBgEH9jOIs3G7d5b+QvPwAY+Gusu9eMAyB6YBBeusNKrRqulq1F9eMsTRsCpsj4VZk6xbSVtVPCH9YGInZfw1s4FmZJkGgrl6L8xZSnLMwqLWV+Ro25OWdo5/t8OsKY5eP1HuC3ulyr2Nn+qhIq+05YJEZ0zoBW0UkOr9A4gDIde0ZAoGANnJYjqi05TlgyOys5GTZn92zRzitAtcsQFEhQvySakPnt7s+opVo6GN3hZv+YDxcy5mFeLzjJPscTsFccx77uKW1gu1Guxh8SMO6qw2ggYabunXwWRn92LAHgOtKW7l1+mN1AvjhAjkq4dLOUd1VoozFIiF+Cdbf2L7utFYvYEY=
-  alipay-public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArDSl+Qjt/BGA2S9B5F6EepgkhCSDfGqeEK/puHkYAaBESdgONui1HF07WQizGJqZB0qfksKfP9kei4l2Wr63Li9VE1JnGVusopjV8jtgGMKaepOUYHA9+kunu1fw+kUhv14Rsaj5XGEzaxigGyJTGrAQxsU0RbUgS9ydz5DouHW+uFzNyVinrM+CZ3OByArb+kMxBXWfRtkwv5sB7bvbdDgfkaqdjJ5hLuRt+oWCCZzQuc5gchfTBTxaNXXoapb1ZR+OFu32pzPEwNrbfNw13UNnKU2SsdC3ja56zxi4CCnXl8yx0jrsRqFBcbxSFzZBGV1E4RKKxVIVbLKPB1px/wIDAQAB
+  merchant-private-key: 
+  alipay-public-key: 
   notify-url: http://localhost:8080/api/v1/pay/notify   # 本地够不着回调,靠主动查单兜底;有内网穿透再换公网地址
   return-url: http://localhost:5173/orders
