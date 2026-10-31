@@ -54,6 +54,10 @@ public class CourseSearchService {
                                 b.filter(f -> f.term(t -> t.field("heritageItemId")
                                         .value(query.getHeritageItemId())));
                             }
+                            if (StrUtil.isNotBlank(query.getCategory())) {
+                                b.filter(f -> f.term(t -> t.field("category")
+                                        .value(query.getCategory())));
+                            }
                             return b;
                         }))
                         .highlight(h -> h.fields("title",

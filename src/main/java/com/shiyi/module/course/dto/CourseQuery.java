@@ -8,4 +8,5 @@ public class CourseQuery {
     private long size = 10;
     private Long heritageItemId;
     private String keyword;
+    private String category;
 }

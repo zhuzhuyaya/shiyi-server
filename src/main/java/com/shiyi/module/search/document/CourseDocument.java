@@ -16,6 +16,7 @@ public class CourseDocument {
     private String inheritorName;
     private Long heritageItemId;
     private String heritageName;
+    private String category;       // 门类,用于筛选(从 heritage_item 带出)
     private BigDecimal minPrice;
     private Integer sales;
     private Integer status;

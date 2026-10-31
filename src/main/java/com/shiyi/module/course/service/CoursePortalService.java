@@ -42,10 +42,20 @@ public class CoursePortalService {
 
     /** C 端课程列表:分页 + 筛选,只卖上架的 */
     public Page<CourseListVO> listForPortal(CourseQuery query) {
+        // category 在 heritage_item 表:先查出门类下的项目 id 集合,再按 id 筛选课程
+        List<Long> heritageIdsForCategory = null;
+        if (StrUtil.isNotBlank(query.getCategory())) {
+            heritageIdsForCategory = heritageItemMapper.selectList(Wrappers.<HeritageItem>lambdaQuery()
+                            .eq(HeritageItem::getCategory, query.getCategory()))
+                    .stream().map(HeritageItem::getId).toList();
+        }
+
         Page<Course> page = courseMapper.selectPage(new Page<>(query.getPage(), query.getSize()),
                 Wrappers.<Course>lambdaQuery()
                         .eq(Course::getStatus, Course.STATUS_ONLINE)   // 闸门:未审核/下架的 C 端不可见
                         .eq(query.getHeritageItemId() != null, Course::getHeritageItemId, query.getHeritageItemId())
+                        .in(heritageIdsForCategory != null && !heritageIdsForCategory.isEmpty(),
+                                Course::getHeritageItemId, heritageIdsForCategory)
                         .like(StrUtil.isNotBlank(query.getKeyword()), Course::getTitle, query.getKeyword())
                         .orderByDesc(Course::getSales));
 

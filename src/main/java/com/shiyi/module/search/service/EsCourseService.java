@@ -46,7 +46,10 @@ public class EsCourseService {
                   "heritageItemId": { "type": "long" },
                   "minPrice":       { "type": "double" },
                   "sales":          { "type": "integer" },
-                  "status":         { "type": "integer" }
+                  "status":         { "type": "integer" },
+                  "heritageName":   { "type": "keyword" },
+                  "category":       { "type": "keyword" },   // 门类筛选
+                  "heritageItemId": { "type": "long" }
                 }
               }
             }
@@ -142,6 +145,7 @@ public class EsCourseService {
         HeritageItem item = heritageItemMapper.selectById(course.getHeritageItemId());
         if (item != null) {
             doc.setHeritageName(item.getName());
+            doc.setCategory(item.getCategory());
         }
         CourseSession cheapest = courseSessionMapper.selectOne(Wrappers.<CourseSession>lambdaQuery()
                 .eq(CourseSession::getCourseId, course.getId())
