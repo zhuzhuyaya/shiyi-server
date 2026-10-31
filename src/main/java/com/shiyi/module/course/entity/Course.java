@@ -31,6 +31,8 @@ public class Course {
     private BigDecimal lng;        // DECIMAL 对应 BigDecimal，别用 double
     private BigDecimal lat;
     private Integer status;
+    /** 驳回原因;手动下架时为空,用于区分"审核未通过"和"被下架" */
+    private String rejectReason;
     private Integer sales;
 
     @TableLogic

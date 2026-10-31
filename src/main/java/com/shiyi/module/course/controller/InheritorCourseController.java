@@ -2,6 +2,7 @@ package com.shiyi.module.course.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
 import com.shiyi.common.Result;
+import com.shiyi.infra.limiter.RateLimit;
 import com.shiyi.module.course.dto.CourseCreateDTO;
 import com.shiyi.module.course.dto.CourseSessionCreateDTO;
 import com.shiyi.module.course.entity.Course;
@@ -22,9 +23,19 @@ public class InheritorCourseController {
 
     private final CourseService courseService;
 
+    @RateLimit(key = "course:publish", window = 60, max = 10)   // 发课是写操作,每人 60s 最多 10 次
     @PostMapping
     public Result<Void> publish(@Valid @RequestBody CourseCreateDTO dto) {
         courseService.publish(dto);
+        return Result.ok();
+    }
+
+    /** 改课:仅待审核/未通过可编辑;被驳回的保存后自动重新进入待审核 */
+    @RateLimit(key = "course:update", window = 60, max = 10)
+    @PutMapping("/{courseId}")
+    public Result<Void> update(@PathVariable Long courseId,
+                               @Valid @RequestBody CourseCreateDTO dto) {
+        courseService.updateCourse(courseId, dto);
         return Result.ok();
     }
 
@@ -49,5 +60,21 @@ public class InheritorCourseController {
     public Result<String> cover(@PathVariable Long courseId,
                                 @RequestParam("file") MultipartFile file) {
         return Result.ok(courseService.updateCover(courseId, file));
+    }
+
+    /** 图集:POST /api/v1/inheritor/courses/1/images, form-data 多个 file 字段 */
+    @PostMapping("/{courseId}/images")
+    public Result<Void> images(@PathVariable Long courseId,
+                               @RequestParam("files") List<MultipartFile> files) {
+        courseService.updateImages(courseId, files);
+        return Result.ok();
+    }
+
+    /** 停售场次:POST /api/v1/inheritor/courses/1/sessions/2/close */
+    @PostMapping("/{courseId}/sessions/{sessionId}/close")
+    public Result<Void> closeSession(@PathVariable Long courseId,
+                                     @PathVariable Long sessionId) {
+        courseService.closeSession(courseId, sessionId);
+        return Result.ok();
     }
 }

@@ -24,7 +24,11 @@ public class Inheritor {
     private String cover;
     private String bio;
     private String contact;
+    /** 资质证书照片 URL 数组,JSON 字符串(存法同 Course.images) */
+    private String certImages;
     private Integer verifyStatus;
+    /** 驳回原因,通过/重提时清空 */
+    private String rejectReason;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }
